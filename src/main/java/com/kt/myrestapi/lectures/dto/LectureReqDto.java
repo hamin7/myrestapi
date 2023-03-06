@@ -35,9 +35,9 @@ public class LectureReqDto {
     private LocalDateTime endLectureDateTime;
 
     private String location;
-    @Min(100)
+    @Min(0)
     private int basePrice;
-    @Min(1000)
+    @Min(0)
     private int maxPrice;
 
     @Min(10)
