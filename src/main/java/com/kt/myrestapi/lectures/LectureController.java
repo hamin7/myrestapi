@@ -29,12 +29,12 @@ public class LectureController {
                                         Errors errors) {
         //입력항목 체크
         if(errors.hasErrors()){
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
         //입력항목의 biz logic 체크
         lectureValidator.validate(lectureReqDto, errors);
         if(errors.hasErrors()){
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
 
         Lecture lecture = modelMapper.map(lectureReqDto, Lecture.class);
@@ -43,5 +43,9 @@ public class LectureController {
                 .slash(lecture.getId());//http://localhost:8080/api/lectures/10
         URI uri = linkBuilder.toUri();
         return ResponseEntity.created(uri).body(savedLecture);
+    }
+
+    private static ResponseEntity<Errors> badRequest(Errors errors) {
+        return ResponseEntity.badRequest().body(errors);
     }
 }
