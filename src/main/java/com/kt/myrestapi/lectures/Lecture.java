@@ -3,6 +3,7 @@ package com.kt.myrestapi.lectures;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Builder
@@ -10,8 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter @Setter
 @EqualsAndHashCode(of="id")
+@Entity
 public class Lecture {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String name;
     private String description;
 
@@ -29,5 +33,6 @@ public class Lecture {
     private int limitOfEnrollment;
     private boolean offline;
     private boolean free;
+    @Enumerated(EnumType.STRING)
     private LectureStatus lectureStatus = LectureStatus.DRAFT;
 }
