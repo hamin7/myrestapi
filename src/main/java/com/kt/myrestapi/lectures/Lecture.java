@@ -1,7 +1,5 @@
 package com.kt.myrestapi.lectures;
 
-import com.kt.myrestapi.LectureStatus;
-
 import java.time.LocalDateTime;
 
 public class Lecture {
