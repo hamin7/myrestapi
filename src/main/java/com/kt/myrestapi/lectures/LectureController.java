@@ -20,6 +20,6 @@ public class LectureController {
         WebMvcLinkBuilder linkBuilder = WebMvcLinkBuilder.linkTo(LectureController.class)
                 .slash(lecture.getId());//http://localhost:8080/api/lectures/10
         URI uri = linkBuilder.toUri();
-
+        return ResponseEntity.created(uri).body(lecture);
     }
 }

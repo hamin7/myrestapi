@@ -1,5 +1,6 @@
 package com.kt.myrestapi.lectures;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,9 +14,14 @@ public class Lecture {
     private Integer id;
     private String name;
     private String description;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime beginEnrollmentDateTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime closeEnrollmentDateTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime beginLectureDateTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime endLectureDateTime;
     private String location;
     private int basePrice;
