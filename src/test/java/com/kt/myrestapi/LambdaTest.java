@@ -4,13 +4,25 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class LambdaTest {
 
     @Test
     public void consumer() {
         List<String> list = List.of("aa", "bb", "cc");//Immutable List
-
+        //1. Anonymous Inner class
+        list.forEach(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                System.out.println("s = " + s);
+            }
+        });
+        //2.Lambda Expression
+        //Consumer의 추상 메서드 void accept(T t)
+        list.forEach(val -> System.out.println(val));
+        //3.Method Reference
+        list.forEach(System.out::println);
     }
 
     @Test @Disabled
