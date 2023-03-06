@@ -7,10 +7,12 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @Controller
@@ -21,7 +23,11 @@ public class LectureController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity createLecture(@RequestBody LectureReqDto lectureReqDto) {
+    public ResponseEntity createLecture(@RequestBody @Valid LectureReqDto lectureReqDto,
+                                        Errors errors) {
+        if(errors.hasErrors()){
+            return ResponseEntity.badRequest().body(errors);
+        }
         Lecture lecture = modelMapper.map(lectureReqDto, Lecture.class);
         Lecture savedLecture = lectureRepository.save(lecture);
         WebMvcLinkBuilder linkBuilder = WebMvcLinkBuilder.linkTo(LectureController.class)
