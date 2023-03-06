@@ -34,5 +34,4 @@ public class LectureResDto {
     private boolean free;
     private String email;
 
-
 }
