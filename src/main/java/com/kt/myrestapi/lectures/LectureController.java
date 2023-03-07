@@ -53,7 +53,6 @@ public class LectureController {
 
         LectureResource lectureResource = new LectureResource(lectureResDto);
         lectureResource.add(linkTo(LectureController.class).withRel("query-lectures"));
-        lectureResource.add(linkBuilder.withSelfRel());
         lectureResource.add(linkBuilder.withRel("update-lecture"));
 
         return ResponseEntity.created(uri).body(lectureResource);
