@@ -24,6 +24,7 @@ public class AccountService implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     public Account saveAccount(Account account) {
+        //password를 인코딩(암호화)하기
         account.setPassword(this.passwordEncoder.encode(account.getPassword()));
         return this.accountRepository.save(account);
     }
