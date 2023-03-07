@@ -37,16 +37,27 @@ public class LectureController {
                                         @RequestBody @Valid LectureReqDto lectureReqDto,
                                         Errors errors) {
         Optional<Lecture> optionalLecture = this.lectureRepository.findById(id);
+        //id와 매핑되는 Entity가 없으면 404 에러
         if(optionalLecture.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id + " Lecture Not Found!");
         }
+        //입력항목 체크해서 오류가 있다면 400 에러
         if (errors.hasErrors()) {
             return badRequest(errors);
         }
+        //입력항목 Biz로직 체크해서 오류가 있다면 400 에러
         this.lectureValidator.validate(lectureReqDto, errors);
         if (errors.hasErrors()) {
             return badRequest(errors);
         }
+
+        Lecture existingLecture = optionalLecture.get();
+        this.modelMapper.map(lectureReqDto, existingLecture);
+        Lecture savedLecture = this.lectureRepository.save(existingLecture);
+        LectureResDto lectureResDto = modelMapper.map(savedLecture,
+                LectureResDto.class);
+        LectureResource LectureResource = new LectureResource(lectureResDto);
+        return ResponseEntity.ok(LectureResource);
     }
 
     @GetMapping("/{id}")
