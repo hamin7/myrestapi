@@ -32,6 +32,13 @@ public class LectureController {
     private final ModelMapper modelMapper;
     private final LectureValidator lectureValidator;
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateLecture(@PathVariable Integer id,
+                                        @RequestBody @Valid LectureReqDto lectureReqDto,
+                                        Errors errors) {
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity getLecture(@PathVariable Integer id) {
         Optional<Lecture> optionalLecture = this.lectureRepository.findById(id);
