@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AccountService accountService;
+    @Autowired
     Environment env;
 
 //    @Override
@@ -40,7 +41,8 @@ protected void configure(HttpSecurity http) throws Exception {
 }
     private CustomAuthenticationFilter getAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter authenticationFilter =
-                new CustomAuthenticationFilter(authenticationManager(), accountService, env);
+                new CustomAuthenticationFilter(authenticationManager(),
+                        accountService, env);
         return authenticationFilter;
     }
 
