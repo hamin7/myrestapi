@@ -5,6 +5,7 @@ import com.kt.myrestapi.lectures.dto.LectureReqDto;
 import com.kt.myrestapi.lectures.dto.LectureResDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -31,7 +32,9 @@ public class LectureController {
 
     @GetMapping
     public ResponseEntity queryLectures(Pageable pageable) {
-        return ResponseEntity.ok(this.lectureRepository.findAll(pageable));
+        Page<Lecture> lecturePage = this.lectureRepository.findAll(pageable);
+        //Page<Lecture> => PagedModel<LectureResDto>
+        return ResponseEntity.ok(lecturePage);
     }
 
     @PostMapping
