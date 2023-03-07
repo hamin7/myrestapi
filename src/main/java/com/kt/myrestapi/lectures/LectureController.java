@@ -36,7 +36,17 @@ public class LectureController {
     public ResponseEntity updateLecture(@PathVariable Integer id,
                                         @RequestBody @Valid LectureReqDto lectureReqDto,
                                         Errors errors) {
-
+        Optional<Lecture> optionalLecture = this.lectureRepository.findById(id);
+        if(optionalLecture.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id + " Lecture Not Found!");
+        }
+        if (errors.hasErrors()) {
+            return badRequest(errors);
+        }
+        this.lectureValidator.validate(lectureReqDto, errors);
+        if (errors.hasErrors()) {
+            return badRequest(errors);
+        }
     }
 
     @GetMapping("/{id}")
