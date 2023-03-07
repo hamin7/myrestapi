@@ -40,9 +40,13 @@ public class LectureController {
         //Page<Lecture> => Page<LectureResDto>
         Page<LectureResDto> lectureResDtoPage =
                 lecturePage.map(lecture -> modelMapper.map(lecture, LectureResDto.class));
+        //1단계 - first,prev,next,last 링크
+        //PagedModel<org.springframework.hateoas.EntityModel<T>> toModel(Page<T> entity)
         //Page<LectureResDto> => PagedModel<EntityModel<LectureResDto>>
-        PagedModel<EntityModel<LectureResDto>> pagedResources =
-                assembler.toModel(lectureResDtoPage);
+//        PagedModel<EntityModel<LectureResDto>> pagedResources =
+//                assembler.toModel(lectureResDtoPage);
+        //2단계 - first,prev,next,last 링크 + SelfLink 도 포함
+
         return ResponseEntity.ok(pagedResources);
     }
 
