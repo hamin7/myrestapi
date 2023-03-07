@@ -50,14 +50,17 @@ public class LectureController {
         if (errors.hasErrors()) {
             return badRequest(errors);
         }
-
+        //id와 매핑되는 Lecture 엔티티가 있으면 Optional에서 꺼내기
         Lecture existingLecture = optionalLecture.get();
+        //LectureReqDto -> Lecture 타입으로 매핑
         this.modelMapper.map(lectureReqDto, existingLecture);
+        //Lecture 엔티티를 DB에 저장
         Lecture savedLecture = this.lectureRepository.save(existingLecture);
-        LectureResDto lectureResDto = modelMapper.map(savedLecture,
-                LectureResDto.class);
-        LectureResource LectureResource = new LectureResource(lectureResDto);
-        return ResponseEntity.ok(LectureResource);
+        //저장된 Lecture 엔티티 -> LectureResDto 타입으로 매핑
+        LectureResDto lectureResDto = modelMapper.map(savedLecture, LectureResDto.class);
+        //SelfLink와 함께 전달하기 위해서 LectureResDto를 LectureResouce로 래핑한다
+        LectureResource lectureResource = new LectureResource(lectureResDto);
+        return ResponseEntity.ok(lectureResource);
     }
 
     @GetMapping("/{id}")
