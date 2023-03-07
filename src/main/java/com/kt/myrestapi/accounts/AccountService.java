@@ -20,14 +20,15 @@ public class AccountService implements UserDetailsService {
     AccountRepository accountRepository;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(username)
+        Account account = accountRepository.findByEmail(username) //Optional<Account>
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         return new User(account.getEmail(), account.getPassword(),
                 authorities(account.getRoles()));
     }
     private Collection<? extends GrantedAuthority> authorities(Set<AccountRole> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.name()))
-                .collect(Collectors.toSet());
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .collect(Collectors.toSet());//Set<AccountRole>
     }
 
 
