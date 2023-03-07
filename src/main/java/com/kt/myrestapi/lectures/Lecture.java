@@ -28,6 +28,7 @@ public class Lecture {
     private int maxPrice;
     private int limitOfEnrollment;
     private boolean offline;
+
     private boolean free;
     @Enumerated(EnumType.STRING)
     private LectureStatus lectureStatus = LectureStatus.DRAFT;
