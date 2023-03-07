@@ -3,6 +3,7 @@ package com.kt.myrestapi.config;
 import com.kt.myrestapi.accounts.Account;
 import com.kt.myrestapi.accounts.AccountRole;
 import com.kt.myrestapi.accounts.AccountService;
+import com.kt.myrestapi.common.AppProperties;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -31,11 +32,13 @@ public class AppConfig {
         return new ApplicationRunner() {
             @Autowired
             AccountService accountService;
+            @Autowired
+            AppProperties appProperties;
             @Override
             public void run(ApplicationArguments args) throws Exception {
                 Account account = Account.builder()
-                        .email("user@email.com")
-                        .password("user")
+                        .email(appProperties.getUserUsername())
+                        .password(appProperties.getUserPassword())
                         .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
                         .build();
                 accountService.saveAccount(account);
