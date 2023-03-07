@@ -8,7 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -38,8 +40,10 @@ public class LectureController {
         //Page<Lecture> => Page<LectureResDto>
         Page<LectureResDto> lectureResDtoPage =
                 lecturePage.map(lecture -> modelMapper.map(lecture, LectureResDto.class));
-        //Page<Lecture> => PagedModel<LectureResDto>
-        return ResponseEntity.ok(lecturePage);
+        //Page<LectureResDto> => PagedModel<EntityModel<LectureResDto>>
+        PagedModel<EntityModel<LectureResDto>> pagedResources =
+                assembler.toModel(lectureResDtoPage);
+        return ResponseEntity.ok(pagedResources);
     }
 
     @PostMapping
