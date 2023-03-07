@@ -58,7 +58,7 @@ public class LectureController {
         Lecture savedLecture = this.lectureRepository.save(existingLecture);
         //저장된 Lecture 엔티티 -> LectureResDto 타입으로 매핑
         LectureResDto lectureResDto = modelMapper.map(savedLecture, LectureResDto.class);
-        //SelfLink와 함께 전달하기 위해서 LectureResDto를 LectureResouce로 래핑한다
+        //SelfLink와 함께 전달하기 위해서 LectureResDto를 LectureResource로 Wrapping한다
         LectureResource lectureResource = new LectureResource(lectureResDto);
         return ResponseEntity.ok(lectureResource);
     }
