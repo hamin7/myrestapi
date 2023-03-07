@@ -33,6 +33,8 @@ public class LectureController {
     @GetMapping
     public ResponseEntity queryLectures(Pageable pageable) {
         Page<Lecture> lecturePage = this.lectureRepository.findAll(pageable);
+        Page<LectureResDto> lectureResDtoPage =
+                lecturePage.map(lecture -> modelMapper.map(lecture, LectureResDto.class));
         //Page<Lecture> => PagedModel<LectureResDto>
         return ResponseEntity.ok(lecturePage);
     }
