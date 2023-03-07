@@ -1,6 +1,7 @@
 package com.kt.myrestapi.lectures;
 
 import com.kt.myrestapi.lectures.dto.LectureReqDto;
+import com.kt.myrestapi.lectures.dto.LectureResDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.MediaTypes;
@@ -43,9 +44,11 @@ public class LectureController {
         lecture.update();
 
         Lecture savedLecture = lectureRepository.save(lecture);
+        LectureResDto lectureResDto = modelMapper.map(savedLecture, LectureResDto.class);
         WebMvcLinkBuilder linkBuilder = WebMvcLinkBuilder.linkTo(LectureController.class)
                 .slash(lecture.getId());//http://localhost:8080/api/lectures/10
         URI uri = linkBuilder.toUri();
+
         return ResponseEntity.created(uri).body(savedLecture);
     }
 
